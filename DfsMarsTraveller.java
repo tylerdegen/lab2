@@ -7,13 +7,16 @@ public class DfsMarsTraveller {
 	public boolean has2;
 	public boolean has3;
 	public MarsMap M;
-	public MarsPlace startPlace;
+	public MarsPlace location;
+	public LifoSearchQueue q;
 	
-	public DfsMarsTraveller(String datafile){
+	public DfsMarsTraveller(String datafile, String startPlace){
 		has1 = false;
 		has2 = false;
 		has3 = false;
 		M = new MarsMap(datafile);
+		location = M.getPlace(startPlace);
+		q = new LifoSearchQueue();
 	}
 	
 	public float cost(MarsPlace m1, MarsPlace m2){
@@ -31,18 +34,20 @@ public class DfsMarsTraveller {
 		String startPoint = args[1];
 		String readFile = args[2];
 		
-		DfsMarsTraveller dmt = new DfsMarsTraveller("hw2-data1.txt");
-		MarsPlace startPlace = dmt.M.getPlace(startPoint);
-		float test = dmt.cost(startPlace, dmt.M.getPlace("B"));
+		DfsMarsTraveller dmt = new DfsMarsTraveller("hw2-data1.txt", startPoint);
+		//dmt.location = dmt.M.getPlace(startPoint);
+		float test = dmt.cost(dmt.location, dmt.M.getPlace("B"));
 		
 		//if (startFlag != "-s" || startPoint == null ||  readFile ==""){
 			//System.out.print("ERROR");
 			//return;
 		//}
 		
-		
+		SearchNode current = new BasicMapSearchNode(test, "A", dmt);
+		current.priority = test;
+		dmt.q.insert(current);
 		
 		System.out.println("it works!");
-		System.out.println(startFlag + startPlace.name() + readFile + test);
+		System.out.println(startFlag + dmt.location.name() + readFile + test);
 	}
 }

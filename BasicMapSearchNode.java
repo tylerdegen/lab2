@@ -10,13 +10,18 @@ public class BasicMapSearchNode extends SearchNode {
      * the name of the node
      */
     public String nodeName;
+	
+	//state of node
+	public DfsMarsTraveller dmt;
 
     /**
      * construct a new node
      */
-    public BasicMapSearchNode() {
-	priority=0;
-	nodeName=null;
+    public BasicMapSearchNode(float pri, String name, DfsMarsTraveller d) {
+		
+	priority=pri;
+	nodeName=name;
+	dmt = d;
     }
 
     /**
