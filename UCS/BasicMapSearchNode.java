@@ -1,0 +1,55 @@
+import java.lang.*;
+import java.util.*;
+
+/**
+ * A sample implementation of a SearchNode
+ */
+public class BasicMapSearchNode extends SearchNode {
+    // public float priority defined in SearchNode
+    /**
+     * the name of the node
+     */
+    public String nodeName;
+	
+	//state of node
+	public String history;
+	public boolean[] has;
+
+    /**
+     * construct a new node
+     */
+    public BasicMapSearchNode() {
+		
+	this.priority=0;
+	this.nodeName = null;
+	this.history ="";
+	this.has = new boolean[] {false, false, false};
+    }
+	
+	public void set(float pri, String name, String h, boolean ha[]){
+		this.priority = pri;
+		this.nodeName = name;
+		this.history = h;
+		this.has[0] = ha[0];
+		this.has[1] = ha[1];
+		this.has[2] = ha[2];
+	}
+
+    /**
+     * compare this SearchNode to another
+     * @return an integer, -1, 0, or 1
+     *
+     * Returns -1 if this node has lower cost (priority), 1 if this node has higher cost (priority), otherwise returns the comparison of nodeName strings (same names imply the same node 
+     */
+    public int compareTo(Object s) {
+	BasicMapSearchNode sn=(BasicMapSearchNode)s;
+	if (priority<sn.priority) {
+	    return -1;
+	} else if (priority==sn.priority) {
+	    return nodeName.compareTo(sn.nodeName);
+	} else {
+	    return 1;
+	}
+    }
+	
+}
