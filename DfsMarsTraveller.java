@@ -90,8 +90,36 @@ public class DfsMarsTraveller {
 		}
 		//use DFS to find way to base
 		else{
-			//set dmt to state of found
+			System.out.println("Found all three samples! Returning to base.");
+			//reset queue
+			this.q = new LifoSearchQueue();
+			
 			System.out.println(this.history);
+			limit = 0;
+			String visited = "";
+			while (!this.location.name().equals("base") && limit < 20){
+				String[] locations = this.location.adjacent();
+				for (String loc: locations){
+					BasicMapSearchNode current = new BasicMapSearchNode();
+					current.set(this.cost(this.location, this.M.getPlace(loc)), loc, this);
+					this.q.insert(current);
+					//System.out.println(loc);
+				}
+				BasicMapSearchNode next = new BasicMapSearchNode();
+				next = this.q.getNextBM();
+				//while these nodes are visited, pop them off
+				while (visited.indexOf(next.nodeName) != -1){
+					next = this.q.getNextBM();
+				}
+				updateLoc(next.nodeName);
+				visited += next.nodeName;
+				System.out.println(this.location.name());
+				limit++;
+			
+				this.history += this.location.name();
+			}
+			System.out.println(this.history);
+			System.out.println("Success!");
 		}
 		
 	}
