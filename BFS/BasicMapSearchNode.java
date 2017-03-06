@@ -13,6 +13,8 @@ public class BasicMapSearchNode extends SearchNode {
 	
 	//state of node
 	public BfsMarsTraveller bmt;
+	public String history;
+	public boolean[] has;
 
     /**
      * construct a new node
@@ -22,12 +24,18 @@ public class BasicMapSearchNode extends SearchNode {
 	this.priority=0;
 	this.nodeName = null;
 	this.bmt = null;
+	this.history ="";
+	this.has = new boolean[] {false, false, false};
     }
 	
-	public void set(float pri, String name, BfsMarsTraveller b){
+	public void set(float pri, String name, BfsMarsTraveller b, String h, boolean ha[]){
 		this.priority = pri;
 		this.nodeName = name;
 		this.bmt = b;
+		this.history = h;
+		this.has[0] = ha[0];
+		this.has[1] = ha[1];
+		this.has[2] = ha[2];
 	}
 
     /**

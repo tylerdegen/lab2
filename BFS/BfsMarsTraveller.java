@@ -43,15 +43,22 @@ public class BfsMarsTraveller {
 		SamplePercept s = location.getSamplePercept();
 		int sval = s.value();
 		if (!has1 && sval == 1){
+			System.out.println("Found 1 at " + this.location.name());
 			this.has1 = true;
 		}
 		if(!has2 && sval == 2){
+			System.out.println("Found 2 at " + this.location.name());
 			this.has2 = true;
 		}
 		if (!has3 && sval == 3){
+			System.out.println("Found 3 at " + this.location.name());
 			this.has3 = true;
 		}
 		return has1 && has2 && has3;
+	}
+	public boolean[] packHas(){
+		boolean[] ret = {has1, has2, has3};
+		return ret;
 	}
 	
 	public void printStatus(){
@@ -71,7 +78,7 @@ public class BfsMarsTraveller {
 			String[] locations = this.location.adjacent();
 			for (String loc: locations){
 				BasicMapSearchNode current = new BasicMapSearchNode();
-				current.set(this.cost(this.location, this.M.getPlace(loc)), loc, this);
+				current.set(this.cost(this.location, this.M.getPlace(loc)), loc, this, this.history + loc, this.packHas());
 				this.q.insert(current);
 				this.nodesEnq++;
 			}
@@ -79,10 +86,14 @@ public class BfsMarsTraveller {
 			next = this.q.getNextBM();
 			this.nodesCons++;
 			this.totalDistance += this.M.getDistance(this.location.name(), next.nodeName);
+			this.history = next.history;
+			this.has1 = next.has[0];
+			this.has2 = next.has[1];
+			this.has3 = next.has[2];
 			updateLoc(next.nodeName);
 			//System.out.println(this.location.name() + this.has2);
 			
-			this.history += this.location.name();
+			//this.history += this.location.name();
 		}
 		if (!this.check()){
 			System.out.println("Couldn't find all three given limit");
@@ -91,7 +102,9 @@ public class BfsMarsTraveller {
 		//use DFS to find way to base
 		else{
 			System.out.println("Found all three samples! Returning to base.");
+			System.out.println(this.location.name());
 			this.printStatus();
+			
 			//this.printStatus();
 			//reset queue
 			this.q = new FifoSearchQueue();
@@ -102,7 +115,7 @@ public class BfsMarsTraveller {
 				String[] locations = this.location.adjacent();
 				for (String loc: locations){
 					BasicMapSearchNode current = new BasicMapSearchNode();
-					current.set(this.cost(this.location, this.M.getPlace(loc)), loc, this);
+					current.set(this.cost(this.location, this.M.getPlace(loc)), loc, this, "TODO", this.packHas());
 					this.q.insert(current);
 					this.nodesEnq++;
 					//System.out.println(loc);
@@ -151,7 +164,7 @@ public class BfsMarsTraveller {
 		
 		//SearchNode current = new BasicMapSearchNode(test, "A", dmt);
 		BasicMapSearchNode current = new BasicMapSearchNode();
-		current.set(test, "A", bmt);
+		current.set(test, startPoint, bmt, startPoint, bmt.packHas());
 		current.priority = test;
 		bmt.q.insert(current);
 		bmt.nodesEnq++;
