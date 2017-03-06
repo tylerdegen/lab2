@@ -8,7 +8,7 @@ public class UcsMarsTraveller {
 	public boolean has3;
 	public MarsMap M;
 	public MarsPlace location;
-	public FifoSearchQueue q;
+	public PrioritySearchQueue q;
 	public String history;
 	public float totalDistance;
 	public float totalCost;
@@ -21,7 +21,7 @@ public class UcsMarsTraveller {
 		this.has3 = false;
 		this.M = new MarsMap(datafile);
 		this.location = M.getPlace(startPlace);
-		this.q = new FifoSearchQueue();
+		this.q = new PrioritySearchQueue();
 		this.history = "";
 		this.totalDistance = 0;
 		this.nodesEnq = 0;
@@ -88,7 +88,7 @@ public class UcsMarsTraveller {
 			this.nodesCons++;
 			//no -- cost was already generated in current, use from next
 			//this.totalCost += this.cost(this.location, this.M.getPlace(next.nodeName);
-			this.totalCost = next.pri;
+			this.totalCost = next.priority;
 			this.totalDistance += this.M.getDistance(this.location.name(), next.nodeName);
 			this.history = next.history;
 			this.has1 = next.has[0];

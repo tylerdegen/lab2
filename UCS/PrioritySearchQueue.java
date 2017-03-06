@@ -20,6 +20,9 @@ public class PrioritySearchQueue implements SearchQueue {
     public void insert(SearchNode sn) {
 	mySet.add(sn);
     }
+    public void insertBM(SearchNode bmsn) {
+	mySet.add(bmsn);
+    }
 
 
     /**
@@ -41,6 +44,16 @@ public class PrioritySearchQueue implements SearchQueue {
 	    Object o=mySet.first();
 	    mySet.remove(o);
 	    return (SearchNode)o;
+	}
+    }
+    
+    public BasicMapSearchNode getNextBM() {
+	if (mySet.size()==0) {
+	    return null;
+	} else {
+	    Object o=mySet.first();
+	    mySet.remove(o);
+	    return (BasicMapSearchNode)o;
 	}
     }
 

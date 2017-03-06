@@ -8,7 +8,7 @@ public class UcsMarsTraveller {
 	public boolean has3;
 	public MarsMap M;
 	public MarsPlace location;
-	public FifoSearchQueue q;
+	public PrioritySearchQueue q;
 	public String history;
 	public float totalDistance;
 	public float totalCost;
@@ -21,7 +21,7 @@ public class UcsMarsTraveller {
 		this.has3 = false;
 		this.M = new MarsMap(datafile);
 		this.location = M.getPlace(startPlace);
-		this.q = new FifoSearchQueue();
+		this.q = new PrioritySearchQueue();
 		this.history = "";
 		this.totalDistance = 0;
 		this.nodesEnq = 0;
@@ -111,7 +111,7 @@ public class UcsMarsTraveller {
 			
 			//this.printStatus();
 			//reset queue
-			this.q = new FifoSearchQueue();
+			this.q = new PrioritySearchQueue();
 			
 			//System.out.println(this.history);
 			String visited = "";
