@@ -51,7 +51,7 @@ public class FifoSearchQueue implements SearchQueue {
     	if (myList.size() == 0){
     		return null;
     	} else {
-    		return (BasicMapSearchNode)myList.removeFirst();
+    		return (BasicMapSearchNode)myList.removeLast();
     	}
     }
 

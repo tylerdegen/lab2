@@ -8,7 +8,7 @@ public class BfsMarsTraveller {
 	public boolean has3;
 	public MarsMap M;
 	public MarsPlace location;
-	public LifoSearchQueue q;
+	public FifoSearchQueue q;
 	public String history;
 	public float totalDistance;
 	public int nodesEnq;
@@ -20,7 +20,7 @@ public class BfsMarsTraveller {
 		this.has3 = false;
 		this.M = new MarsMap(datafile);
 		this.location = M.getPlace(startPlace);
-		this.q = new LifoSearchQueue();
+		this.q = new FifoSearchQueue();
 		this.history = "";
 		this.totalDistance = 0;
 		this.nodesEnq = 0;
@@ -58,15 +58,15 @@ public class BfsMarsTraveller {
 			System.out.println("Sequence of states: " + this.history);
 			System.out.println("Distance in km: " + this.totalDistance);
 			System.out.println("Total number of nodes enqueued: " + this.nodesEnq);
-			System.out.println("Total number of nodes enqueued: " + this.nodesCons);
+			System.out.println("Total number of nodes considered: " + this.nodesCons);
+			System.out.print("\n\n");
 	}
 	
 	public void run(){
 
 		//while this.check() is false
-		int limit = 0;
 		this.history += this.location.name();
-		while( !this.check() && limit < 20){
+		while( !this.check() ){
 			//add neighbors onto queue
 			String[] locations = this.location.adjacent();
 			for (String loc: locations){
@@ -81,7 +81,7 @@ public class BfsMarsTraveller {
 			this.totalDistance += this.M.getDistance(this.location.name(), next.nodeName);
 			updateLoc(next.nodeName);
 			//System.out.println(this.location.name() + this.has2);
-			limit++;
+			
 			this.history += this.location.name();
 		}
 		if (!this.check()){
@@ -91,14 +91,14 @@ public class BfsMarsTraveller {
 		//use DFS to find way to base
 		else{
 			System.out.println("Found all three samples! Returning to base.");
+			this.printStatus();
 			//this.printStatus();
 			//reset queue
-			this.q = new LifoSearchQueue();
+			this.q = new FifoSearchQueue();
 			
 			//System.out.println(this.history);
-			limit = 0;
 			String visited = "";
-			while (!this.location.name().equals("base") && limit < 20){
+			while (!this.location.name().equals("base")){
 				String[] locations = this.location.adjacent();
 				for (String loc: locations){
 					BasicMapSearchNode current = new BasicMapSearchNode();
@@ -118,16 +118,9 @@ public class BfsMarsTraveller {
 				updateLoc(next.nodeName);
 				visited += next.nodeName;
 				//System.out.println(this.location.name());
-				limit++;
 			
 				this.history += this.location.name();
 			}
-			/*
-			System.out.println("Sequence of states: " + this.history);
-			System.out.println("Distance in km: " + this.totalDistance);
-			System.out.println("Total number of nodes enqueued: " + this.nodesEnq);
-			System.out.println("Total number of nodes enqueued: " + this.nodesCons);
-			*/
 			System.out.println("Returned to base! Success!");
 			this.printStatus();
 			
