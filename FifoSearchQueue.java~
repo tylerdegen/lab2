@@ -2,28 +2,24 @@ import java.lang.*;
 import java.util.*;
 
 /**
- * A last-in-first-out search queue
+ * A first-in-first-out search queue
  */
-public class LifoSearchQueue implements SearchQueue {
+public class FifoSearchQueue implements SearchQueue {
     private LinkedList myList;
-
+    
     /**
-     * Create a new LifoSearchQueue
+     * Create a new FifoSearchQueue
      */
-    public LifoSearchQueue() {
+    public FifoSearchQueue() {
 	myList=new LinkedList();
     }
-    
+
     /**
      * Insert a SearchNode into the queue
      * @param sn the SearchNode to be inserted
      */
-    public void insert(SearchNode sn) {
+    public void insert(BasicMapSearchNode sn) {
 	myList.addLast(sn);
-    }
-    
-    public void insert(BasicMapSearchNode bmsn) {
-    	myList.addLast(bmsn);
     }
 
 
@@ -39,20 +35,12 @@ public class LifoSearchQueue implements SearchQueue {
      * Get the next SearchNode
      * @return a SearchNode from the "top" of the queue.
      */
-    public SearchNode getNext() {
+    public BasicMapSearchNode getNext() {
 	if (myList.size()==0) {
 	    return null;
 	} else {
-	    return (SearchNode)myList.removeLast();
+	    return (BasicMapSearchNode)myList.removeFirst();
 	}
-    }
-    
-    public BasicMapSearchNode getNextBM() {
-    	if (myList.size() == 0){
-    		return null;
-    	} else {
-    		return (BasicMapSearchNode)myList.removeLast();
-    	}
     }
 
     /**
@@ -64,7 +52,7 @@ public class LifoSearchQueue implements SearchQueue {
 
 	// priority is meaningless here
 
-	LifoSearchQueue Q=new LifoSearchQueue();
+	FifoSearchQueue Q=new FifoSearchQueue();
 	BasicMapSearchNode bsn=new BasicMapSearchNode();
 	bsn.priority=1;
 	bsn.nodeName="A";

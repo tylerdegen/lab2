@@ -47,7 +47,7 @@ public class LifoSearchQueue implements SearchQueue {
 	}
     }
     
-    public BasicMapSearchNode getNextBM() {
+    public BasicMapSearchNode getNext() {
     	if (myList.size() == 0){
     		return null;
     	} else {

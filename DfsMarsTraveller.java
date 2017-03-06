@@ -55,6 +55,12 @@ public class DfsMarsTraveller {
 			this.q.insert(current);
 			System.out.println(loc);
 		}
+		BasicMapSearchNode next = new BasicMapSearchNode();
+		next = this.q.getNextBM();
+		updateLoc(next.nodeName);
+		check();
+		//while this.check() is false
+		
 	}
 
 	//test implementation of Traveller

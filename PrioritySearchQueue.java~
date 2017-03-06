@@ -2,28 +2,23 @@ import java.lang.*;
 import java.util.*;
 
 /**
- * A last-in-first-out search queue
+ * A priorty search queue: puts out SearchNodes in order of increasing priority (cost)
  */
-public class LifoSearchQueue implements SearchQueue {
-    private LinkedList myList;
+public class PrioritySearchQueue implements SearchQueue {
+    private TreeSet mySet;
 
     /**
-     * Create a new LifoSearchQueue
+     * Create a new FifoSearchQueue
      */
-    public LifoSearchQueue() {
-	myList=new LinkedList();
+    public PrioritySearchQueue() {
+	mySet=new TreeSet();
     }
-    
+
     /**
-     * Insert a SearchNode into the queue
-     * @param sn the SearchNode to be inserted
+     * Create a new FifoSearchQueue
      */
     public void insert(SearchNode sn) {
-	myList.addLast(sn);
-    }
-    
-    public void insert(BasicMapSearchNode bmsn) {
-    	myList.addLast(bmsn);
+	mySet.add(sn);
     }
 
 
@@ -32,7 +27,7 @@ public class LifoSearchQueue implements SearchQueue {
      * @return an integer size
      */
     public int size() {
-	return myList.size();
+	return mySet.size();
     }
 
     /**
@@ -40,31 +35,26 @@ public class LifoSearchQueue implements SearchQueue {
      * @return a SearchNode from the "top" of the queue.
      */
     public SearchNode getNext() {
-	if (myList.size()==0) {
+	if (mySet.size()==0) {
 	    return null;
 	} else {
-	    return (SearchNode)myList.removeLast();
+	    Object o=mySet.first();
+	    mySet.remove(o);
+	    return (SearchNode)o;
 	}
-    }
-    
-    public BasicMapSearchNode getNextBM() {
-    	if (myList.size() == 0){
-    		return null;
-    	} else {
-    		return (BasicMapSearchNode)myList.removeLast();
-    	}
     }
 
     /**
      * Example code: insert 5 items into the queue and pull them out again
      */
     public static void main(String[] args) {
-	// as an example, add five elements to the list and empty
+	// as an example, add five elements to the queue and empty
 	// the queue in order
 
-	// priority is meaningless here
+	// outputs nodes in priority order (low cost to high cost)
+	// example: vowels before consonants
 
-	LifoSearchQueue Q=new LifoSearchQueue();
+	PrioritySearchQueue Q=new PrioritySearchQueue();
 	BasicMapSearchNode bsn=new BasicMapSearchNode();
 	bsn.priority=1;
 	bsn.nodeName="A";
