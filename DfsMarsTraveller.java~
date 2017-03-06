@@ -10,6 +10,9 @@ public class DfsMarsTraveller {
 	public MarsPlace location;
 	public LifoSearchQueue q;
 	public String history;
+	public float totalDistance;
+	public int nodesEnq;
+	public int nodesCons;
 	
 	public DfsMarsTraveller(String datafile, String startPlace){
 		this.has1 = false;
@@ -19,6 +22,9 @@ public class DfsMarsTraveller {
 		this.location = M.getPlace(startPlace);
 		this.q = new LifoSearchQueue();
 		this.history = "";
+		this.totalDistance = 0;
+		this.nodesEnq = 0;
+		this.nodesCons = 0;
 	}
 	
 	public float cost(MarsPlace m1, MarsPlace m2){
@@ -49,22 +55,7 @@ public class DfsMarsTraveller {
 	}
 	
 	public void run(){
-		//String[] locations = this.location.adjacent();
-		//add the first round of neighbors onto the queue
-		/*
-		for (String loc: locations){
-			BasicMapSearchNode current = new BasicMapSearchNode();
-			current.set(this.cost(this.location, this.M.getPlace(loc)), loc, this);
-			this.q.insert(current);
-			System.out.println(loc);
-		}
-		BasicMapSearchNode next = new BasicMapSearchNode();
-		next = this.q.getNextBM();
-		updateLoc(next.nodeName);
-		System.out.println(this.location.name() + this.has2);
-		check();
-		System.out.println(this.has2);
-		*/
+
 		//while this.check() is false
 		int limit = 0;
 		this.history += this.location.name();
@@ -76,13 +67,15 @@ public class DfsMarsTraveller {
 				current.set(this.cost(this.location, this.M.getPlace(loc)), loc, this);
 				this.q.insert(current);
 				//System.out.println(loc);
+				this.nodesEnq++;
 			}
 			BasicMapSearchNode next = new BasicMapSearchNode();
 			next = this.q.getNextBM();
+			this.nodesCons++;
+			this.totalDistance += this.M.getDistance(this.location.name(), next.nodeName);
 			updateLoc(next.nodeName);
 			System.out.println(this.location.name() + this.has2);
 			limit++;
-			
 			this.history += this.location.name();
 		}
 		if (!this.check()){
@@ -103,6 +96,7 @@ public class DfsMarsTraveller {
 					BasicMapSearchNode current = new BasicMapSearchNode();
 					current.set(this.cost(this.location, this.M.getPlace(loc)), loc, this);
 					this.q.insert(current);
+					this.nodesEnq++;
 					//System.out.println(loc);
 				}
 				BasicMapSearchNode next = new BasicMapSearchNode();
@@ -110,7 +104,9 @@ public class DfsMarsTraveller {
 				//while these nodes are visited, pop them off
 				while (visited.indexOf(next.nodeName) != -1){
 					next = this.q.getNextBM();
+					this.nodesCons++;
 				}
+				this.totalDistance += this.M.getDistance(this.location.name(), next.nodeName);
 				updateLoc(next.nodeName);
 				visited += next.nodeName;
 				System.out.println(this.location.name());
