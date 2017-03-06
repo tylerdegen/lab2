@@ -24,6 +24,7 @@ public class UcsMarsTraveller {
 		this.q = new PrioritySearchQueue();
 		this.history = "";
 		this.totalDistance = 0;
+		this.totalCost = 0;
 		this.nodesEnq = 0;
 		this.nodesCons = 0;
 	}
@@ -67,6 +68,7 @@ public class UcsMarsTraveller {
 			System.out.println("Distance in km: " + this.totalDistance);
 			System.out.println("Total number of nodes enqueued: " + this.nodesEnq);
 			System.out.println("Total number of nodes considered: " + this.nodesCons);
+			System.out.println("Total cost: " + this.totalCost);
 			System.out.print("\n\n");
 	}
 	

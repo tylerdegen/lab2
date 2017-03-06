@@ -111,7 +111,7 @@ public class UcsMarsTraveller {
 			
 			//this.printStatus();
 			//reset queue
-			this.q = new FifoSearchQueue();
+			this.q = new PrioritySearchQueue();
 			
 			//System.out.println(this.history);
 			String visited = "";
