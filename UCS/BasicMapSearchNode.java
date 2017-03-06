@@ -14,6 +14,7 @@ public class BasicMapSearchNode extends SearchNode {
 	//state of node
 	public String history;
 	public boolean[] has;
+	public float cost;
 
     /**
      * construct a new node

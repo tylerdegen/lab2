@@ -11,6 +11,7 @@ public class UcsMarsTraveller {
 	public FifoSearchQueue q;
 	public String history;
 	public float totalDistance;
+	public float totalCost;
 	public int nodesEnq;
 	public int nodesCons;
 	
@@ -43,15 +44,15 @@ public class UcsMarsTraveller {
 		SamplePercept s = location.getSamplePercept();
 		int sval = s.value();
 		if (!has1 && sval == 1){
-			System.out.println("Found 1 at " + this.location.name());
+			//System.out.println("Found 1 at " + this.location.name());
 			this.has1 = true;
 		}
 		if(!has2 && sval == 2){
-			System.out.println("Found 2 at " + this.location.name());
+			//System.out.println("Found 2 at " + this.location.name());
 			this.has2 = true;
 		}
 		if (!has3 && sval == 3){
-			System.out.println("Found 3 at " + this.location.name());
+			//System.out.println("Found 3 at " + this.location.name());
 			this.has3 = true;
 		}
 		return has1 && has2 && has3;
@@ -78,13 +79,16 @@ public class UcsMarsTraveller {
 			String[] locations = this.location.adjacent();
 			for (String loc: locations){
 				BasicMapSearchNode current = new BasicMapSearchNode();
-				current.set(this.cost(this.location, this.M.getPlace(loc)), loc, this.history + loc, this.packHas());
+				current.set(this.totalCost + this.cost(this.location, this.M.getPlace(loc)), loc, this.history + loc, this.packHas());
 				this.q.insert(current);
 				this.nodesEnq++;
 			}
 			BasicMapSearchNode next = new BasicMapSearchNode();
 			next = this.q.getNextBM();
 			this.nodesCons++;
+			//no -- cost was already generated in current, use from next
+			//this.totalCost += this.cost(this.location, this.M.getPlace(next.nodeName);
+			this.totalCost = next.pri;
 			this.totalDistance += this.M.getDistance(this.location.name(), next.nodeName);
 			this.history = next.history;
 			this.has1 = next.has[0];
@@ -167,7 +171,7 @@ public class UcsMarsTraveller {
 		
 		//SearchNode current = new BasicMapSearchNode(test, "A", dmt);
 		BasicMapSearchNode current = new BasicMapSearchNode();
-		current.set(test, startPoint, umt, startPoint, umt.packHas());
+		current.set(test, startPoint, startPoint, umt.packHas());
 		current.priority = test;
 		umt.q.insert(current);
 		umt.nodesEnq++;
