@@ -115,7 +115,7 @@ public class BfsMarsTraveller {
 				String[] locations = this.location.adjacent();
 				for (String loc: locations){
 					BasicMapSearchNode current = new BasicMapSearchNode();
-					current.set(this.cost(this.location, this.M.getPlace(loc)), loc, this, "TODO", this.packHas());
+					current.set(this.cost(this.location, this.M.getPlace(loc)), loc, this, this.history + loc, this.packHas());
 					this.q.insert(current);
 					this.nodesEnq++;
 					//System.out.println(loc);
@@ -128,11 +128,14 @@ public class BfsMarsTraveller {
 					this.nodesCons++;
 				}
 				this.totalDistance += this.M.getDistance(this.location.name(), next.nodeName);
+				this.history = next.history;
+				this.has1 = next.has[0];
+				this.has2 = next.has[1];
+				this.has3 = next.has[2];
 				updateLoc(next.nodeName);
 				visited += next.nodeName;
 				//System.out.println(this.location.name());
 			
-				this.history += this.location.name();
 			}
 			System.out.println("Returned to base! Success!");
 			this.printStatus();
