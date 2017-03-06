@@ -18,6 +18,7 @@ public class DfsMarsTraveller {
 		this.M = new MarsMap(datafile);
 		this.location = M.getPlace(startPlace);
 		this.q = new LifoSearchQueue();
+		this.history = "";
 	}
 	
 	public float cost(MarsPlace m1, MarsPlace m2){
@@ -68,6 +69,7 @@ public class DfsMarsTraveller {
 		int limit = 0;
 		while( !this.check() && limit < 20){
 			//add neighbors onto queue
+			this.history += this.location.name();
 			String[] locations = this.location.adjacent();
 			for (String loc: locations){
 				BasicMapSearchNode current = new BasicMapSearchNode();
@@ -86,7 +88,8 @@ public class DfsMarsTraveller {
 		}
 		//use DFS to find way to base
 		else{
-		
+			//set dmt to state of found
+			System.out.println(this.history);
 		}
 		
 	}

@@ -67,6 +67,7 @@ public class DfsMarsTraveller {
 		*/
 		//while this.check() is false
 		int limit = 0;
+		this.history += this.location.name();
 		while( !this.check() && limit < 20){
 			//add neighbors onto queue
 			String[] locations = this.location.adjacent();
@@ -81,13 +82,16 @@ public class DfsMarsTraveller {
 			updateLoc(next.nodeName);
 			System.out.println(this.location.name() + this.has2);
 			limit++;
+			
+			this.history += this.location.name();
 		}
 		if (!this.check()){
 			System.out.println("Couldn't find all three given limit");
 		}
 		//use DFS to find way to base
 		else{
-		
+			//set dmt to state of found
+			System.out.println(this.history);
 		}
 		
 	}
