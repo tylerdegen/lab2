@@ -54,6 +54,13 @@ public class DfsMarsTraveller {
 		return has1 && has2 && has3;
 	}
 	
+	public void printStatus(){
+			System.out.println("Sequence of states: " + this.history);
+			System.out.println("Distance in km: " + this.totalDistance);
+			System.out.println("Total number of nodes enqueued: " + this.nodesEnq);
+			System.out.println("Total number of nodes enqueued: " + this.nodesCons);
+	}
+	
 	public void run(){
 
 		//while this.check() is false
@@ -66,7 +73,6 @@ public class DfsMarsTraveller {
 				BasicMapSearchNode current = new BasicMapSearchNode();
 				current.set(this.cost(this.location, this.M.getPlace(loc)), loc, this);
 				this.q.insert(current);
-				//System.out.println(loc);
 				this.nodesEnq++;
 			}
 			BasicMapSearchNode next = new BasicMapSearchNode();
@@ -74,20 +80,22 @@ public class DfsMarsTraveller {
 			this.nodesCons++;
 			this.totalDistance += this.M.getDistance(this.location.name(), next.nodeName);
 			updateLoc(next.nodeName);
-			System.out.println(this.location.name() + this.has2);
+			//System.out.println(this.location.name() + this.has2);
 			limit++;
 			this.history += this.location.name();
 		}
 		if (!this.check()){
 			System.out.println("Couldn't find all three given limit");
+			this.printStatus();
 		}
 		//use DFS to find way to base
 		else{
 			System.out.println("Found all three samples! Returning to base.");
+			//this.printStatus();
 			//reset queue
 			this.q = new LifoSearchQueue();
 			
-			System.out.println(this.history);
+			//System.out.println(this.history);
 			limit = 0;
 			String visited = "";
 			while (!this.location.name().equals("base") && limit < 20){
@@ -109,16 +117,20 @@ public class DfsMarsTraveller {
 				this.totalDistance += this.M.getDistance(this.location.name(), next.nodeName);
 				updateLoc(next.nodeName);
 				visited += next.nodeName;
-				System.out.println(this.location.name());
+				//System.out.println(this.location.name());
 				limit++;
 			
 				this.history += this.location.name();
 			}
+			/*
 			System.out.println("Sequence of states: " + this.history);
 			System.out.println("Distance in km: " + this.totalDistance);
 			System.out.println("Total number of nodes enqueued: " + this.nodesEnq);
 			System.out.println("Total number of nodes enqueued: " + this.nodesCons);
-			System.out.println("Success!");
+			*/
+			System.out.println("Returned to base! Success!");
+			this.printStatus();
+			
 		}
 		
 	}
@@ -133,7 +145,7 @@ public class DfsMarsTraveller {
 		*/
 		String startFlag = args[0];
 		String startPoint = args[1];
-		String readFile = "hw2-data1.txt";//args[2];
+		String readFile = args[2];
 		
 		DfsMarsTraveller dmt = new DfsMarsTraveller(readFile, startPoint);
 		//dmt.location = dmt.M.getPlace(startPoint);
@@ -149,9 +161,11 @@ public class DfsMarsTraveller {
 		current.set(test, "A", dmt);
 		current.priority = test;
 		dmt.q.insert(current);
+		dmt.nodesEnq++;
+		dmt.nodesCons++;
 		
-		System.out.println("it works!");
-		System.out.println(startFlag + dmt.location.name() + readFile + test);
+		//System.out.println("it works!");
+		//System.out.println(startFlag + dmt.location.name() + readFile + test);
 		dmt.run();
 	}
 }
