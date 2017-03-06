@@ -12,7 +12,7 @@ public class BasicMapSearchNode extends SearchNode {
     public String nodeName;
 	
 	//state of node
-	public BfsMarsTraveller dmt;
+	public DfsMarsTraveller dmt;
 
     /**
      * construct a new node

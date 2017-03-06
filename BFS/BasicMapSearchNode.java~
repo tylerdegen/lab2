@@ -21,13 +21,13 @@ public class BasicMapSearchNode extends SearchNode {
 		
 	this.priority=0;
 	this.nodeName = null;
-	this.dmt = null;
+	this.bmt = null;
     }
 	
-	public void set(float pri, String name, DfsMarsTraveller d){
+	public void set(float pri, String name, BfsMarsTraveller b){
 		this.priority = pri;
 		this.nodeName = name;
-		this.dmt = d;
+		this.bmt = b;
 	}
 
     /**

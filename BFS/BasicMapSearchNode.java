@@ -12,7 +12,7 @@ public class BasicMapSearchNode extends SearchNode {
     public String nodeName;
 	
 	//state of node
-	public BfsMarsTraveller dmt;
+	public BfsMarsTraveller bmt;
 
     /**
      * construct a new node
@@ -21,13 +21,13 @@ public class BasicMapSearchNode extends SearchNode {
 		
 	this.priority=0;
 	this.nodeName = null;
-	this.dmt = null;
+	this.bmt = null;
     }
 	
-	public void set(float pri, String name, DfsMarsTraveller d){
+	public void set(float pri, String name, BfsMarsTraveller b){
 		this.priority = pri;
 		this.nodeName = name;
-		this.dmt = d;
+		this.bmt = b;
 	}
 
     /**
