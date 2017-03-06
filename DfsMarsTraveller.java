@@ -127,9 +127,13 @@ public class DfsMarsTraveller {
 	//test implementation of Traveller
 	public static void main(String args[]) {
 		
-		
+		/*
 		String startFlag = "-s";//args[0];
 		String startPoint = "A";//args[1];
+		String readFile = "hw2-data1.txt";//args[2];
+		*/
+		String startFlag = args[0];
+		String startPoint = args[1];
 		String readFile = "hw2-data1.txt";//args[2];
 		
 		DfsMarsTraveller dmt = new DfsMarsTraveller(readFile, startPoint);
