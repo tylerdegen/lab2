@@ -43,7 +43,9 @@ public class DfsMarsTraveller {
 			//return;
 		//}
 		
-		SearchNode current = new BasicMapSearchNode(test, "A", dmt);
+		//SearchNode current = new BasicMapSearchNode(test, "A", dmt);
+		BasicMapSearchNode current = new BasicMapSearchNode();
+		current.set(test, "A", dmt);
 		current.priority = test;
 		dmt.q.insert(current);
 		
