@@ -9,6 +9,7 @@ public class DfsMarsTraveller {
 	public MarsMap M;
 	public MarsPlace location;
 	public LifoSearchQueue q;
+	public String history;
 	
 	public DfsMarsTraveller(String datafile, String startPlace){
 		this.has1 = false;
@@ -17,6 +18,7 @@ public class DfsMarsTraveller {
 		this.M = new MarsMap(datafile);
 		this.location = M.getPlace(startPlace);
 		this.q = new LifoSearchQueue();
+		this.history = "";
 	}
 	
 	public float cost(MarsPlace m1, MarsPlace m2){
@@ -47,8 +49,9 @@ public class DfsMarsTraveller {
 	}
 	
 	public void run(){
-		String[] locations = location.adjacent();
+		//String[] locations = this.location.adjacent();
 		//add the first round of neighbors onto the queue
+		/*
 		for (String loc: locations){
 			BasicMapSearchNode current = new BasicMapSearchNode();
 			current.set(this.cost(this.location, this.M.getPlace(loc)), loc, this);
@@ -58,8 +61,34 @@ public class DfsMarsTraveller {
 		BasicMapSearchNode next = new BasicMapSearchNode();
 		next = this.q.getNextBM();
 		updateLoc(next.nodeName);
+		System.out.println(this.location.name() + this.has2);
 		check();
+		System.out.println(this.has2);
+		*/
 		//while this.check() is false
+		int limit = 0;
+		while( !this.check() && limit < 20){
+			//add neighbors onto queue
+			String[] locations = this.location.adjacent();
+			for (String loc: locations){
+				BasicMapSearchNode current = new BasicMapSearchNode();
+				current.set(this.cost(this.location, this.M.getPlace(loc)), loc, this);
+				this.q.insert(current);
+				//System.out.println(loc);
+			}
+			BasicMapSearchNode next = new BasicMapSearchNode();
+			next = this.q.getNextBM();
+			updateLoc(next.nodeName);
+			System.out.println(this.location.name() + this.has2);
+			limit++;
+		}
+		if (!this.check()){
+			System.out.println("Couldn't find all three given limit");
+		}
+		//use DFS to find way to base
+		else{
+		
+		}
 		
 	}
 
