@@ -67,6 +67,7 @@ public class AstarMarsTraveller {
 			System.out.println("Distance in km: " + this.totalDistance);
 			System.out.println("Total number of nodes enqueued: " + this.nodesEnq);
 			System.out.println("Total number of nodes considered: " + this.nodesCons);
+			System.out.println("Total cost: " + this.totalCost);
 			System.out.print("\n\n");
 	}
 	
@@ -79,7 +80,8 @@ public class AstarMarsTraveller {
 			String[] locations = this.location.adjacent();
 			for (String loc: locations){
 				BasicMapSearchNode current = new BasicMapSearchNode();
-				current.set(this.totalCost + this.cost(this.location, this.M.getPlace(loc)), loc, this.history + loc, this.packHas());
+				
+				current.set(this.M.getDistance(this.location, this.M.getPlace(loc)) + this.totalCost + this.cost(this.location, this.M.getPlace(loc)), loc, this.history + loc, this.packHas());
 				this.q.insert(current);
 				this.nodesEnq++;
 			}
@@ -168,17 +170,6 @@ public class AstarMarsTraveller {
 			//System.out.print("ERROR");
 			//return;
 		//}
-		
-		//SearchNode current = new BasicMapSearchNode(test, "A", dmt);
-		/*BasicMapSearchNode current = new BasicMapSearchNode();
-		current.set(test, startPoint, startPoint, amt.packHas());
-		current.priority = test;
-		amt.q.insert(current);
-		amt.nodesEnq++;
-		amt.nodesCons++;*/
-		
-		//System.out.println("it works!");
-		//System.out.println(startFlag + dmt.location.name() + readFile + test);
 		amt.run();
 	}
 }
