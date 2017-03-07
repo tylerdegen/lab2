@@ -151,18 +151,13 @@ public class DfsMarsTraveller {
 		//dmt.location = dmt.M.getPlace(startPoint);
 		float test = dmt.cost(dmt.location, dmt.M.getPlace("B"));
 		
-		//if (startFlag != "-s" || startPoint == null ||  readFile ==""){
-			//System.out.print("ERROR");
-			//return;
-		//}
+		if (!startFlag.equals("-s") || startPoint == null ||  readFile.equals("")){
+			System.out.print("ERROR. Should be in form -s startplace readfile");
+			return;
+		}
 		
 		//SearchNode current = new BasicMapSearchNode(test, "A", dmt);
-		BasicMapSearchNode current = new BasicMapSearchNode();
-		current.set(test, "A", dmt);
-		current.priority = test;
-		dmt.q.insert(current);
-		dmt.nodesEnq++;
-		dmt.nodesCons++;
+
 		
 		//System.out.println("it works!");
 		//System.out.println(startFlag + dmt.location.name() + readFile + test);

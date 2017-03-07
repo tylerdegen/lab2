@@ -44,15 +44,12 @@ public class AstarMarsTraveller {
 		SamplePercept s = location.getSamplePercept();
 		int sval = s.value();
 		if (!has1 && sval == 1){
-			//System.out.println("Found 1 at " + this.location.name());
 			this.has1 = true;
 		}
 		if(!has2 && sval == 2){
-			//System.out.println("Found 2 at " + this.location.name());
 			this.has2 = true;
 		}
 		if (!has3 && sval == 3){
-			//System.out.println("Found 3 at " + this.location.name());
 			this.has3 = true;
 		}
 		return has1 && has2 && has3;
@@ -80,7 +77,6 @@ public class AstarMarsTraveller {
 			String[] locations = this.location.adjacent();
 			for (String loc: locations){
 				BasicMapSearchNode current = new BasicMapSearchNode();
-				
 				current.set(this.M.getDistance(this.location, this.M.getPlace(loc)) + this.totalCost + this.cost(this.location, this.M.getPlace(loc)), loc, this.history + loc, this.packHas());
 				this.q.insert(current);
 				this.nodesEnq++;
@@ -88,8 +84,6 @@ public class AstarMarsTraveller {
 			BasicMapSearchNode next = new BasicMapSearchNode();
 			next = this.q.getNextBM();
 			this.nodesCons++;
-			//no -- cost was already generated in current, use from next
-			//this.totalCost += this.cost(this.location, this.M.getPlace(next.nodeName);
 			this.totalCost = next.priority;
 			this.totalDistance += this.M.getDistance(this.location.name(), next.nodeName);
 			this.history = next.history;
@@ -105,17 +99,15 @@ public class AstarMarsTraveller {
 			System.out.println("Couldn't find all three given limit");
 			this.printStatus();
 		}
-		//use DFS to find way to base
+		//use Astar to find way to base
 		else{
 			System.out.println("Found all three samples! Returning to base.");
 			System.out.println(this.location.name());
 			this.printStatus();
 			
-			//this.printStatus();
 			//reset queue
 			this.q = new PrioritySearchQueue();
 			
-			//System.out.println(this.history);
 			String visited = "";
 			while (!this.location.name().equals("base")){
 				String[] locations = this.location.adjacent();
@@ -124,7 +116,6 @@ public class AstarMarsTraveller {
 					current.set(this.cost(this.location, this.M.getPlace(loc)), loc, this.history + loc, this.packHas());
 					this.q.insert(current);
 					this.nodesEnq++;
-					//System.out.println(loc);
 				}
 				BasicMapSearchNode next = new BasicMapSearchNode();
 				next = this.q.getNextBM();
@@ -140,8 +131,6 @@ public class AstarMarsTraveller {
 				this.has3 = next.has[2];
 				updateLoc(next.nodeName);
 				visited += next.nodeName;
-				//System.out.println(this.location.name());
-			
 			}
 			System.out.println("Returned to base! Success!");
 			this.printStatus();
@@ -153,11 +142,6 @@ public class AstarMarsTraveller {
 	//test implementation of Traveller
 	public static void main(String args[]) {
 		
-		/*
-		String startFlag = "-s";//args[0];
-		String startPoint = "A";//args[1];
-		String readFile = "hw2-data1.txt";//args[2];
-		*/
 		String startFlag = args[0];
 		String startPoint = args[1];
 		String readFile = args[2];
@@ -166,10 +150,10 @@ public class AstarMarsTraveller {
 		//dmt.location = dmt.M.getPlace(startPoint);
 		float test = amt.cost(amt.location, amt.M.getPlace("B"));
 		
-		//if (startFlag != "-s" || startPoint == null ||  readFile ==""){
-			//System.out.print("ERROR");
-			//return;
-		//}
+		if (!startFlag.equals("-s") || startPoint == null ||  readFile.equals("")){
+			System.out.print("ERROR. Should be in form -s startplace readfile");
+			return;
+		}
 		amt.run();
 	}
 }

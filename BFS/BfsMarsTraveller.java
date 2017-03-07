@@ -43,15 +43,15 @@ public class BfsMarsTraveller {
 		SamplePercept s = location.getSamplePercept();
 		int sval = s.value();
 		if (!has1 && sval == 1){
-			System.out.println("Found 1 at " + this.location.name());
+			//System.out.println("Found 1 at " + this.location.name());
 			this.has1 = true;
 		}
 		if(!has2 && sval == 2){
-			System.out.println("Found 2 at " + this.location.name());
+			//System.out.println("Found 2 at " + this.location.name());
 			this.has2 = true;
 		}
 		if (!has3 && sval == 3){
-			System.out.println("Found 3 at " + this.location.name());
+			//System.out.println("Found 3 at " + this.location.name());
 			this.has3 = true;
 		}
 		return has1 && has2 && has3;
@@ -99,7 +99,7 @@ public class BfsMarsTraveller {
 			System.out.println("Couldn't find all three given limit");
 			this.printStatus();
 		}
-		//use DFS to find way to base
+		//use BFS to find way to base
 		else{
 			System.out.println("Found all three samples! Returning to base.");
 			System.out.println(this.location.name());
@@ -160,21 +160,11 @@ public class BfsMarsTraveller {
 		//dmt.location = dmt.M.getPlace(startPoint);
 		float test = bmt.cost(bmt.location, bmt.M.getPlace("B"));
 		
-		//if (startFlag != "-s" || startPoint == null ||  readFile ==""){
-			//System.out.print("ERROR");
-			//return;
-		//}
+		if (!startFlag.equals("-s") || startPoint == null ||  readFile.equals("")){
+			System.out.print("ERROR. Should be in form -s startplace readfile");
+			return;
+		}
 		
-		//SearchNode current = new BasicMapSearchNode(test, "A", dmt);
-		BasicMapSearchNode current = new BasicMapSearchNode();
-		current.set(test, startPoint, bmt, startPoint, bmt.packHas());
-		current.priority = test;
-		bmt.q.insert(current);
-		bmt.nodesEnq++;
-		bmt.nodesCons++;
-		
-		//System.out.println("it works!");
-		//System.out.println(startFlag + dmt.location.name() + readFile + test);
 		bmt.run();
 	}
 }

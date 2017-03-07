@@ -105,7 +105,7 @@ public class UcsMarsTraveller {
 			System.out.println("Couldn't find all three given limit");
 			this.printStatus();
 		}
-		//use DFS to find way to base
+		//use UCS to find way to base
 		else{
 			System.out.println("Found all three samples! Returning to base.");
 			System.out.println(this.location.name());
@@ -153,11 +153,6 @@ public class UcsMarsTraveller {
 	//test implementation of Traveller
 	public static void main(String args[]) {
 		
-		/*
-		String startFlag = "-s";//args[0];
-		String startPoint = "A";//args[1];
-		String readFile = "hw2-data1.txt";//args[2];
-		*/
 		String startFlag = args[0];
 		String startPoint = args[1];
 		String readFile = args[2];
@@ -166,18 +161,12 @@ public class UcsMarsTraveller {
 		//dmt.location = dmt.M.getPlace(startPoint);
 		float test = umt.cost(umt.location, umt.M.getPlace("B"));
 		
-		//if (startFlag != "-s" || startPoint == null ||  readFile ==""){
-			//System.out.print("ERROR");
-			//return;
-		//}
+		if (!startFlag.equals("-s") || startPoint == null ||  readFile.equals("")){
+			System.out.print("ERROR. Should be in form -s startplace readfile");
+			return;
+		}
 		
 		//SearchNode current = new BasicMapSearchNode(test, "A", dmt);
-		BasicMapSearchNode current = new BasicMapSearchNode();
-		current.set(test, startPoint, startPoint, umt.packHas());
-		current.priority = test;
-		umt.q.insert(current);
-		umt.nodesEnq++;
-		umt.nodesCons++;
 		
 		//System.out.println("it works!");
 		//System.out.println(startFlag + dmt.location.name() + readFile + test);
